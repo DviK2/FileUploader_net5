@@ -1,0 +1,71 @@
+﻿@using FileUploader.Services.Models
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <div class="text-center">
+            <h3 class="card-title">Select file to upload</h3>
+        </div>
+        <p class="card-text">
+
+            <form asp-action="UploadFile" asp-controller="Home" method="post" enctype="multipart/form-data">
+                <div class="input-group">
+                    <input class="form-control" name="uploadedFile" type="file">
+                    <button class="btn btn-secondary" type="submit">Upload</button>
+                </div>
+            </form>
+        </p>
+    </div>
+</div>
+
+@if (ViewBag.Strings != null)
+{
+    <div class="card">
+        <div class="card-body">
+            <div class="text-center">
+                <h3 class="card-title">Uploaded file lines</h3>
+            </div>
+            <p class="card-text">
+                <ul class="list-group list-group-flush">
+                    @foreach (var s in ViewBag.Strings)
+                    {
+                        <li class="list-group-item">@s</li>
+                    }
+                </ul>
+            </p>
+        </div>
+    </div>
+}
+
+@if (ViewBag.Structures != null)
+{
+    <table class="table">
+        <thead class="thead-dark">
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Name</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (FileStructure s in ViewBag.Structures)
+        {
+            <tr>
+                <th scope="row">@s.Id</th>
+                <td>@s.Name</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+
+    foreach (FileStructure s in ViewBag.Structures)
+    {
+        <h5>Id: @s.Id &nbsp &nbsp Name: @s.Name</h5>
+    }
+}
