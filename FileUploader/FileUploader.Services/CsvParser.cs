@@ -12,6 +12,8 @@ namespace FileUploader.Services
     public interface ICsvParser
     {
         IEnumerable<FileStructure>? ParseCsv(Stream stream);
+
+        List<string> ReadAsList(Stream stream);
     }
 
     public class CsvParser : ICsvParser
@@ -34,6 +36,19 @@ namespace FileUploader.Services
                 Console.WriteLine(e);
                 throw;
             }
+        }
+
+        public List<string> ReadAsList(Stream stream)
+        {
+            var result = new List<string>();
+            using var reader = new StreamReader(stream);
+
+            while (reader.Peek() >= 0)
+            {
+                result.Add(reader.ReadLine());
+            }
+
+            return result;
         }
     }
 }
