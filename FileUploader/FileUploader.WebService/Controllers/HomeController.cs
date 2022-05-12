@@ -45,26 +45,13 @@ namespace FileUploader.WebService.Controllers
             if (uploadedFile == null)
                 return View("Index");
 
-            var strings = ReadAsList(uploadedFile);
+            var strings = _parser.ReadAsList(uploadedFile.OpenReadStream());
             var structures = _parser.ParseCsv(uploadedFile.OpenReadStream());
 
             ViewBag.Strings = strings;
             ViewBag.structures = structures;
 
             return View("Index");
-        }
-
-        public List<string> ReadAsList(IFormFile file)
-        {
-            var result = new List<string>();
-            using var reader = new StreamReader(file.OpenReadStream());
-
-            while (reader.Peek() >= 0)
-            {
-                result.Add(reader.ReadLine());
-            }
-
-            return result;
         }
     }
 }
